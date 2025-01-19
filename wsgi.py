@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import random
 import requests
 from datetime import date
+import regex
 import time
 app = Flask(__name__)
 
@@ -17,9 +18,20 @@ def guess(name):
   params = {
     "name": name
   }
-  age = requests.get('https://api.agify.io?', params=params)
+  age = requests.get('https://api.agify.io?', params=params).json()['age']
+
+
+  url = "https://api.genderapi.io/api/"
+  payload = f'name={name}&key=678d450fdfdd22d04ad4507c'
+  headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+  }
+  gender = requests.request("POST", url, headers=headers, data=payload).json()['gender']
+  
   return f'Hey {name.capitalize()}\
-   You are maybe {age['name']} '
+   You are maybe {age}\
+   your gender is a {gender}'
+
 
 
 if __name__ == "__name__":
