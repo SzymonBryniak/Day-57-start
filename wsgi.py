@@ -19,18 +19,14 @@ def guess(name):
     "name": name
   }
   age = requests.get('https://api.agify.io?', params=params).json()['age']
-
-
   url = "https://api.genderapi.io/api/"
   payload = f'name={name}&key=678d450fdfdd22d04ad4507c'
   headers = {
       'Content-Type': 'application/x-www-form-urlencoded'
-  }
+  } 
   gender = requests.request("POST", url, headers=headers, data=payload).json()['gender']
   
-  return f'Hey {name.capitalize()}\
-   You are maybe {age}\
-   your gender is a {gender}'
+  return render_template('index2.html', gender=gender, age=age, name=name)
 
 
 
