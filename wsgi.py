@@ -14,7 +14,7 @@ def home():
   return render_template("index.html", num=random_number, year=year)
 
 @app.route('/guess/<string:name>')
-def guess(name):
+def get_guess(name):
   params = {
     "name": name
   }
@@ -28,6 +28,14 @@ def guess(name):
   
   return render_template('index2.html', gender=gender, age=age, name=name)
 
+
+@app.route("/blog/<num>")
+def get_blog(num):
+  print(num)
+  blog_url = "https://api.npoint.io/c790b4d5cab58020d391"
+  response = requests.get(blog_url)
+  all_posts = response.json()
+  return render_template("blog.html", posts=all_posts)
 
 
 if __name__ == "__name__":
